@@ -1,0 +1,23 @@
+##Consultar desde el gateway http://localhost:5224/ms-books-catalogue/api/v1/catalogue
+server:
+  port: ${PORT:5227}
+  servlet:
+    context-path: '/api/v1/catalogue'
+spring:
+  application:
+    name: ms-books-catalogue
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cataloguedb
+    username: catalogue
+    password: R3l4t0SC4t4l0gu3
+  jpa:
+    hibernate:
+      ddl-auto: update
+## Configuración CLiente Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:5225/eureka}
+  instance:
+    preferIpAddress: true
+    hostname: ms-books-catalogue
