@@ -22,9 +22,9 @@ public class UpdateBookRequest {
     private Integer stock;
     private Double price;
     private Double rating;
-    private Long author;
+    private CreateAuthorRequest author;
     private String urlImage;
-    private List<Long> category;
+    private List<CreateCategoryRequest> category;
     private Boolean visibility;
 
 }

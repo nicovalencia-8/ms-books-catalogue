@@ -1,13 +1,13 @@
 package com.relatos.ms_books_catalogue.controllers.request;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,13 +38,13 @@ public class CreateBookRequest {
     private Double rating;
 
     @Valid
-    private Long author;
+    private CreateAuthorRequest author;
 
     @NotBlank(message = "Image Date can not be empty")
     private String urlImage;
 
     @Valid
-    private List<Long> category;
+    private List<CreateCategoryRequest> category;
 
     @NotNull
     private Boolean visibility;

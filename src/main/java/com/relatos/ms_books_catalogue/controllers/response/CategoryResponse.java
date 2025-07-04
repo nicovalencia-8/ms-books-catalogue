@@ -12,11 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryResponse {
 
-    private Long id;
     private String categoryName;
 
     public CategoryResponse(Category category) {
-        this.id = category.getId();
         this.categoryName = category.getCategoryName();
     }
 }

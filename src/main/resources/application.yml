@@ -6,13 +6,6 @@ server:
 spring:
   application:
     name: ms-books-catalogue
-  datasource:
-    url: jdbc:postgresql://localhost:5432/cataloguedb
-    username: catalogue
-    password: R3l4t0SC4t4l0gu3
-  jpa:
-    hibernate:
-      ddl-auto: update
 ## Configuración CLiente Eureka
 eureka:
   client:
@@ -21,3 +14,17 @@ eureka:
   instance:
     preferIpAddress: true
     hostname: ms-books-catalogue
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+##Elasticsearch confi
+elasticsearch:
+  host: unir-search-1279391337.us-east-1.bonsaisearch.net
+  credentials:
+    user: 12gqcerxtl
+    password: splvj99148
+logging:
+  level:
+    tracer: TRACE

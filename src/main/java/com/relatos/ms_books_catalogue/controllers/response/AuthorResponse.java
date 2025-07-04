@@ -12,12 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuthorResponse {
 
-    private Long id;
     private String firstName;
     private String lastName;
 
     public AuthorResponse(Author author) {
-        this.id = author.getId();
         this.firstName = author.getFirstName();
         this.lastName = author.getLastName();
     }

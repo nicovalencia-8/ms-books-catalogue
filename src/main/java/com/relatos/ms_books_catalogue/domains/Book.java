@@ -1,77 +1,73 @@
 package com.relatos.ms_books_catalogue.domains;
 
 import com.relatos.ms_books_catalogue.controllers.request.CreateBookRequest;
-import com.relatos.ms_books_catalogue.domains.commons.SoftEntity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "books", uniqueConstraints = @UniqueConstraint(columnNames = "ISBN", name = "books_ISBN"))
-public class Book extends SoftEntity {
+@Document(indexName = "books", createIndex = true)
+public class Book {
 
-    @NotNull
+    @Id
+    private Integer id;
+
+    @Field(type = FieldType.Search_As_You_Type)
     private String title;
 
-    @NotNull
+    @Field(type = FieldType.Text)
     private String description;
 
-    @NotNull
-    private String ISBN;
+    @Field(type = FieldType.Keyword)
+    private String isbn;
 
-    @NotNull
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private LocalDateTime publishedDate;
 
-    @NotNull
+    @Field(type = FieldType.Integer)
     private Integer stock;
 
-    @NotNull
+    @Field(type = FieldType.Double)
     private Double price;
 
+    @Field(type = FieldType.Float)
     private Double rating;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "author_id")
+    @Field(type = FieldType.Object)
     private Author author;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "image_id")
-    private Image image;
+    @Field(type = FieldType.Keyword)
+    private String image;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_category",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<Category> categories = new ArrayList<>();
+    @Field(type = FieldType.Nested)
+    private List<Category> category;
 
+    @Field(type = FieldType.Boolean)
     private Boolean visibility;
 
-    public Book(CreateBookRequest bookRequest, Image image, Author author, List<Category> categories) {
+    public Book(CreateBookRequest bookRequest, Author author, List<Category> category) {
         this.title = bookRequest.getTitle();
         this.description = bookRequest.getDescription();
-        this.ISBN = bookRequest.getISBN();
+        this.isbn = bookRequest.getISBN();
         this.publishedDate = bookRequest.getPublishedDate();
         this.stock = bookRequest.getStock();
         this.price = bookRequest.getPrice();
         this.rating = bookRequest.getRating();
         this.author = author;
-        this.image = image;
-        this.categories = categories;
+        this.image = bookRequest.getUrlImage();
+        this.category = category;
         this.visibility = bookRequest.getVisibility();
     }
 

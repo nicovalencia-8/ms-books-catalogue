@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class BookResponse {
 
-    private Long id;
+    private Integer id;
     private String title;
     private String description;
     private LocalDateTime publishedDate;
@@ -37,11 +37,9 @@ public class BookResponse {
         this.price = book.getPrice();
         this.rating = book.getRating();
         this.author = new AuthorResponse(book.getAuthor());
-        this.image = book.getImage().getUrlImage();
-        this.isbn = book.getISBN();
-        this.category = book.getCategories()
-                .stream()
-                .map(CategoryResponse::new)
-                .collect(Collectors.toList());
+        this.image = book.getImage();
+        this.category = book.getCategory().stream().map(CategoryResponse::new).collect(Collectors.toList());
+        this.isbn =  book.getIsbn();
     }
+
 }
